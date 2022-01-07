@@ -1,0 +1,50 @@
+#cloud-config
+
+repo_update: true
+package_reboot_if_required: true
+
+packages:
+- apt-transport-https
+- ca-certificates
+- docker-ce
+- docker-ce-cli
+- containerd.io
+
+apt:
+  preserve_sources_list: true
+  conf: |
+    APT {
+      Get {
+        Assume-Yes "true";
+        Fix-Broken "true";
+      };
+    };
+  sources:
+    instance-docker-ppa.list:
+      keyid: 0EBFCD88
+      source: "deb [arch=amd64] https://download.docker.com/linux/ubuntu $RELEASE stable"
+
+write_files:
+- path: /opt/provision.sh
+  owner: root:root
+  content: ${provision_content}
+  permissions: '0755'
+  encoding: gz+b64
+- path: /opt/docker-compose.yml
+  content: ${compose_content}
+  owner: root:root
+  permissions: '0444'
+  encoding: gz+b64
+- path: /opt/nginx/nginx.conf
+  owner: root:root
+  content: ${nginx_content}
+  permissions: '0444'
+  encoding: gz+b64
+- path: /opt/html/index.html
+  owner: root:root
+  content: ${html_content}
+  permissions: '0444'
+  encoding: gz+b64
+
+runcmd:
+- /opt/provision.sh

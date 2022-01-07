@@ -1,0 +1,9 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:${nginx_version}
+    restart: always
+    volumes:
+    - /opt/nginx/:/etc/nginx/
+    ports:
+    - 80:80
