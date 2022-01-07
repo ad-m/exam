@@ -57,6 +57,7 @@ resource "aws_instance" "app-main" {
   vpc_security_group_ids = [
     aws_security_group.app-security.id
   ]
+  count = 5 # TODO: Move to variables
   user_data_base64 = data.template_cloudinit_config.app.rendered
 
   root_block_device {
