@@ -15,7 +15,7 @@ data "template_cloudinit_config" "app" {
       nginx_content = base64gzip(templatefile("./templates/app/nginx.conf", {
         nginx_proxy = "httpbin.org"
       }))
-      html_content = base64gzip(templatefile("./templates/app/index.html", { }))
+      html_content = base64gzip(templatefile("./templates/app/index.html", {}))
     })
   }
 }

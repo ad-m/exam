@@ -29,7 +29,8 @@ resource "aws_service_discovery_instance" "main" {
   service_id  = aws_service_discovery_service.main.id
 
   attributes = {
-    AWS_EC2_INSTANCE_ID = "i-0abdg374kd892cj6dl"
+    AWS_EC2_INSTANCE_ID = aws_instance.app-main[count.index].id
   }
-  for_each()
+  count = length(aws_instance.app-main)
+
 }

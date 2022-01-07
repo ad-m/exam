@@ -54,7 +54,7 @@ resource "aws_instance" "lb-main" {
     aws_security_group.lb-security.id
   ]
   associate_public_ip_address = true
-  user_data_base64 = data.template_cloudinit_config.lb.rendered
+  user_data_base64            = data.template_cloudinit_config.lb.rendered
 
   root_block_device {
     volume_type           = "gp2"
