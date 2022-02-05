@@ -275,4 +275,5 @@ exam_app/media/
 .pytest_cache/
 .ipython/
 .env
-.envs/*
+## TODO: Keep it secret in real application
+# .envs/*
