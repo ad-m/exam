@@ -55,7 +55,7 @@ services:
     image: redis:6
     container_name: exam_app_local_redis
 
-  celeryworker:
+  celeryworker: &celery-worker
     <<: *django
     image: exam_app_local_celeryworker
     container_name: exam_app_local_celeryworker
@@ -64,6 +64,18 @@ services:
       - postgres
     ports: []
     command: /start-celeryworker
+
+  # duplicated declaration to avoid imperative "scale" command to simulate multiple workers
+  celeryworker-2: 
+    <<: *celery-worker
+    container_name: exam_app_local_celeryworker-2
+
+  celeryworker-3:
+    <<: *celery-worker
+    container_name: exam_app_local_celeryworker-3
+  celeryworker-4:
+    <<: *celery-worker
+    container_name: exam_app_local_celeryworker-4
 
   celerybeat:
     <<: *django

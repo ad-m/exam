@@ -273,6 +273,10 @@ CELERY_TASK_TIME_LIMIT = 5 * 60
 CELERY_TASK_SOFT_TIME_LIMIT = 60
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#beat-scheduler
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#worker-concurrency
+CELERY_WORKER_CONCURRENCY = 1
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#worker-prefetch-multiplier
+CELERY_worker_prefetch_multiplier = 1
 # django-allauth
 # ------------------------------------------------------------------------------
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
@@ -309,7 +313,7 @@ CORS_URLS_REGEX = r"^/api/.*$"
 # See more configuration options at https://drf-spectacular.readthedocs.io/en/latest/settings.html#settings
 SPECTACULAR_SETTINGS = {
     "TITLE": "Exam App API",
-    "DESCRIPTION": "Documentation of API endpoiints of Exam App",
+    "DESCRIPTION": "Documentation of API endpoints of Exam App",
     "VERSION": "1.0.0",
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
     "SERVERS": [
