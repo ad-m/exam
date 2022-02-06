@@ -13,10 +13,10 @@ Application is build on following services:
 
 ## Flow
 
-`producer` schedule a new tasks and send it to `redis`.
-`redis` receive, persist and provide tasks to `worker`.
-`worker` executes a tasks scheduled by `producer`.
-`flower` track everything what happening in application.
+1. `producer` schedule a new tasks and send it to `redis`.
+2. `redis` receive, persist and provide tasks to `worker`.
+3. `worker` executes a tasks scheduled by `producer`.
+4. `flower` track everything what happening in application.
 
 Docker periodically kick in `producer` thanks to restart policy.
 
