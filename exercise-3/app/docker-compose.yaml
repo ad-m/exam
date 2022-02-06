@@ -1,0 +1,37 @@
+version: '3'
+
+x-celery: &celery
+  build:
+    context: .
+  depends_on:
+  - redis
+
+services:
+  redis:
+    image: redis:6
+
+  worker:
+    <<: *celery
+    image: ghcr.io/ad-m/exam/exercise-3/worker:latest
+    environment:
+      BROKER_URL: redis://redis:6379/0
+
+  producer:
+    <<: *celery
+    image: ghcr.io/ad-m/exam/exercise-3/producer:latest
+    command: "python producer.py"
+    restart: always
+    environment:
+      BROKER_URL: redis://redis:6379/0
+      TASK_MIN_DURATION: 10
+      TASK_MAX_DURATION: 40
+      TASK_STEP_DURATION: 2
+  
+  flower:
+    <<: *celery
+    image: ghcr.io/ad-m/exam/exercise-3/flower:latest
+    command: celery -A tasks flower --port=5566
+    environment:
+      BROKER_URL: redis://redis:6379/0
+    ports:
+      - 5566:5566
