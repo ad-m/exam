@@ -50,6 +50,21 @@ app.kubernetes.io/name: {{ include "exam.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{- define "exam.flower.selectorLabels" -}}
+app.kubernetes.io/component: flower
+{{ include "exam.selectorLabels" . }}
+{{- end }}
+
+{{- define "exam.worker.selectorLabels" -}}
+app.kubernetes.io/component: worker
+{{ include "exam.selectorLabels" . }}
+{{- end }}
+
+{{- define "exam.producer.selectorLabels" -}}
+app.kubernetes.io/component: producer
+{{ include "exam.selectorLabels" . }}
+{{- end }}
+
 {{/*
 Create the name of the service account to use
 */}}

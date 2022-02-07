@@ -10,7 +10,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "exam.selectorLabels" . | nindent 6 }}
+      {{- include "exam.worker.selectorLabels" . | nindent 8 }}
   template:
     metadata:
       {{- with .Values.worker.podAnnotations }}
@@ -18,8 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        app.kubernetes.io/component: worker
-        {{- include "exam.selectorLabels" . | nindent 8 }}
+        {{- include "exam.worker.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.worker.image.pullSecrets }}
       imagePullSecrets:

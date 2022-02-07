@@ -8,11 +8,11 @@ spec:
   replicas: {{ .Values.flower.replicaCount }}
   selector:
     matchLabels:
-      {{- include "exam.selectorLabels" . | nindent 6 }}
+      {{- include "exam.flower.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
-      {{- if not .Values.flower.metrics.enabled }}
+      {{- if .Values.flower.metrics.enabled }}
         prometheus.io/scrape: 'true'
         prometheus.io/port: '{{ .Values.flower.port }}'
       {{- end }}
@@ -20,8 +20,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        app.kubernetes.io/component: flower
-        {{- include "exam.selectorLabels" . | nindent 8 }}
+        {{- include "exam.flower.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.flower.image.pullSecrets }}
       imagePullSecrets:

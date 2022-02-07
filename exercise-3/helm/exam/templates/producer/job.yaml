@@ -8,8 +8,7 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/component: producer
-        {{- include "exam.selectorLabels" . | nindent 8 }}
+        {{- include "exam.producer.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.producer.image.pullSecrets }}
       imagePullSecrets:
