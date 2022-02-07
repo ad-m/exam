@@ -46,6 +46,13 @@ spec:
             {{- toYaml .Values.flower.resources | nindent 12 }}
           ports:
           - containerPort: {{ .Values.flower.port }}
+          livenessProbe:
+            httpGet:
+              # Path to probe; should be cheap, but representative of typical behavior
+              path: /
+              port: {{ .Values.flower.port }}
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
           env:
             - name: BROKER_URL
               valueFrom:
