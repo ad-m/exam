@@ -10,7 +10,7 @@ The project consists of the following elements:
   * uses Flower for observability,
   * provides consumer producer and worker Celery
   * provides Redis for transport of Celery components
-* a Helm Chart (directory `helm`) to deploy in one command:
+* a Helm Chart (directory `helm`) to deploy observable environment in one command:
   * Python application from directory `app`:
   * Redis instance for transport
   * Prometheus to collect metrics about environment:
@@ -18,7 +18,3 @@ The project consists of the following elements:
     * Node-export for Kubernetes Node metrics
     * `kube-state-metrics` for Kubernetes resources metrics
   * Grafana to provide UI for observability and – in future – alerting via eg. Slack / SMTP
-
-Data flow in Helm Chart:
-
-![./diagram.png](./diagram.png)

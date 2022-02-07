@@ -131,6 +131,9 @@ grafana:
       flower-dashboard: 
         url: https://gist.githubusercontent.com/ad-m/b617c9f046248194d4cc2017cc583bb1/raw/327f73c7c8d01554d4b9a7ff0f4404ee8e5c0e71/flower.json
         datasource: Prometheus
+      official-flower-dashboard:
+        url: https://raw.githubusercontent.com/mher/flower/master/examples/celery-monitoring-grafana-dashboard.json
+        datasource: Prometheus
       node-exporter:
         # Ref: https://grafana.com/grafana/dashboards/1860
         gnetId: 1860
