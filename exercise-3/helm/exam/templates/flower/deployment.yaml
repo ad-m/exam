@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "exam.fullname" . }}-flower
+  labels:
+    {{- include "exam.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.flower.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "exam.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+      {{- if not .Values.flower.metrics.enabled }}
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '{{ .Values.flower.port }}'
+      {{- end }}
+      {{- with .Values.flower.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app.kubernetes.io/component: flower
+        {{- include "exam.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.flower.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "exam.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.flower.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          command: 
+          - celery
+          - -A
+          - tasks
+          - flower
+          - --port={{ .Values.flower.port }}
+          securityContext:
+            {{- toYaml .Values.flower.securityContext | nindent 12 }}
+          image: "{{ .Values.flower.image.repository }}:{{ .Values.flower.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.flower.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.flower.resources | nindent 12 }}
+          ports:
+          - containerPort: {{ .Values.flower.port }}
+          env:
+            - name: BROKER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: '{{ template "exam.fullname" . }}-env'
+                  key: BROKER_URL
+      {{- with .Values.flower.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.flower.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.flower.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

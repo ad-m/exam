@@ -1,0 +1,81 @@
+# Default values for exam.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+connections:
+  redis_database: '0'
+  redis_host: '{{ template "exam.fullname" . }}-redis-master'
+  redis_password: 'redis'
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+worker:
+  image:
+    repository: ghcr.io/ad-m/exam/exercise-3/worker
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "latest"
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    messageQueueDepth: 80
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  replicaCount: 1
+  podSecurityContext: {}
+  securityContext: {}
+
+flower:
+  image:
+    repository: ghcr.io/ad-m/exam/exercise-3/flower
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "latest"
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  replicaCount: 1
+  podSecurityContext: {}
+  securityContext: {}
+  port: 5566
+  metrics:
+    enabled: true
+  service:
+    type: ClusterIP
+    port: 80
+
+producer:
+  image:
+    repository: ghcr.io/ad-m/exam/exercise-3/producer
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "latest"
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  podSecurityContext: {}
+  securityContext: {}
+  task_duration:
+    min: 1
+    max: 40
+    step: 5
+
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false
+  password: 'redis'
+  metrics:
+    enabled: true
