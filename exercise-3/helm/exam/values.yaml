@@ -79,3 +79,10 @@ redis:
   password: 'redis'
   metrics:
     enabled: true
+
+prometheus:
+  enabled: true
+  alertmanager: 
+    enabled: false
+  pushgateway: 
+    enabled: false
