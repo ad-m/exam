@@ -18,7 +18,7 @@ serviceAccount:
 worker:
   image:
     repository: ghcr.io/ad-m/exam/exercise-3/worker
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
   autoscaling:
