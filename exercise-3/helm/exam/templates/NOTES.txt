@@ -6,7 +6,7 @@
 
 2. Get your Grafana '{{ .Values.grafana.adminUser }}' user password by running:
 
-   kubectl get secret --namespace {{ .Release.Namespace }} {{ include "exam.fullname" . }}-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+   kubectl get secret --namespace {{ .Release.Namespace }} {{ .Release.Name }}-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 
 3. Get Grafana URL by running these commands:
 
