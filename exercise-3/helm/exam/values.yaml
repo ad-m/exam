@@ -137,9 +137,39 @@ grafana:
       node-exporter:
         # Ref: https://grafana.com/grafana/dashboards/1860
         gnetId: 1860
-        revision: 2
+        revision: 26
         datasource: Prometheus
       grafana: 
+        # Ref: https://grafana.com/grafana/dashboards/3590
         gnetId: 3590
         revision: 3
+        datasource: Prometheus
+      kube-state: 
+        # Ref: https://grafana.com/grafana/dashboards/13332
+        gnetId: 13332
+        revision: 12
+        datasource: Prometheus
+      prometheus-stats:
+        gnetId: 2
+        revision: 2
+        datasource: Prometheus
+      kubernetes-cluster-monitoring:
+        gnetId: 1621
+        revision: 1
+        datasource: Prometheus
+      kubernetes-resource-requests:
+        gnetId: 7187
+        revision: 1
+        datasource: Prometheus
+      kubernetes-capacity:
+        gnetId: 5309
+        revision: 1
+        datasource: Prometheus
+      kubernetes-pods:
+        gnetId: 6336
+        revision: 1
+        datasource: Prometheus
+      kubernetes-cluster:
+        gnetId: 6417
+        revision: 1
         datasource: Prometheus
