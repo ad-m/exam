@@ -4,7 +4,7 @@
 
 connections:
   redis_database: '0'
-  redis_host: '{{ template "exam.fullname" . }}-redis-master'
+  redis_host: '{{ .Release.Name }}-redis-master'
   redis_password: 'redis'
 serviceAccount:
   # Specifies whether a service account should be created
