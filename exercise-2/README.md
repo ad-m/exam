@@ -57,7 +57,17 @@ You will notice in Flower a few tasks in state `RUNNING` or `SUCCESS`, but no ta
 
 To understand the disappearance of state `RECEIVED` for `late_acknowledge` tasks, it is worth looking at the flow of worker:
 
-![](https://ptuml.hackmd.io/svg/ZS-n2W8n30RWFK-HKOTx0K4v7Nm2mL52-olIUeKqFNryMy-XcouX8Sb7CcOJjVA8TD0Ke3pi-9oqPXisoO4L3lSPH1ADnOLyYMBOdhI0ba4UkXsyu8hXizlt5_rhxXiqfMU4lrKPCQEZZzBgbSTLIhJrdyglMmYJfx66zkiR)
+```mermaid
+sequenceDiagram
+    Broker->>Worker: task receive;
+    alt acks_late=True
+      Worker->>Worker: execute task;
+      Worker->>Broker: task A acknowledge;
+    else acks_late=False (default)
+      Worker->>Broker: task A acknowledge;
+      Worker->>Worker: execute task;
+    end
+```
 
 Parameter `worker_prefetch_multiplier` control number of messages unacknowledged a consumer can hold. This parameter must effectively be non-zero (regardless of the fact that 0 is not settable because it means infinity in Celery) so that the worker can hold the message for at least a moment before processing it.
 
