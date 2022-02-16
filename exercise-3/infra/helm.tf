@@ -11,7 +11,7 @@ provider "helm" {
 }
 
 resource "helm_release" "exam" {
-  name       = "exam"
+  name = "exam"
 
-  chart      = "./../helm/exam"
+  chart = "./../helm/exam"
 }
