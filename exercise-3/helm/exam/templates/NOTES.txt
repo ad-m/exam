@@ -13,3 +13,7 @@
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name=grafana,app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   echo "Visit http://127.0.0.1:3000 to use Grafana"
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 3000:3000
+
+or
+
+  kubectl --namespace default get service exam-loadbalancer -o jsonpath="{.status.loadBalancer.ingress[0].hostname}"
